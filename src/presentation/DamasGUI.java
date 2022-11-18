@@ -15,6 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 public class DamasGUI extends JFrame {
@@ -49,7 +51,7 @@ public class DamasGUI extends JFrame {
 		PanelEast();
 	}
 	
-public void Ventana() {
+	public void Ventana() {
 		
 		this.setTitle("Damas");	
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
@@ -119,6 +121,12 @@ public void Ventana() {
 		
 		
 		JButton btnPlay = new JButton("PLAY");
+		btnPlay.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Tablero ta = new Tablero();
+				ta.setVisible(true);
+			}
+		});
 		btnPlay.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		panel.add(btnPlay);
 		
