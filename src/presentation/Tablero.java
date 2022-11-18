@@ -84,20 +84,6 @@ public class Tablero extends JFrame {
 		JLabel lblNewLabel_6 = new JLabel(" ");
 		panel_1.add(lblNewLabel_6);
 		
-<<<<<<< HEAD
-=======
-		JButton btnExit = new JButton("EXIT");
-		btnExit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				DamasGUI da = new DamasGUI();
-				da.setVisible(true);
-				dispose();
-			}
-		});
-		btnExit.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		panel_1.add(btnExit);
-		
->>>>>>> Restructura
 		JPanel panel_2 = new JPanel();
 		panel_2.setOpaque(false);
 		getContentPane().add(panel_2, BorderLayout.EAST);
