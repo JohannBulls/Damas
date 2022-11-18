@@ -99,9 +99,7 @@ public void Ventana() {
 		getContentPane().add(panelWest, BorderLayout.WEST);
 		panelWest.setLayout(new BorderLayout(0, 0));
 		
-		
-		
-		
+
 		JLabel lblNewLabel = new JLabel(" ");
 		panelWest.add(lblNewLabel, BorderLayout.NORTH);
 		
@@ -121,27 +119,19 @@ public void Ventana() {
 		
 		
 		JButton btnPlay = new JButton("PLAY");
-		btnPlay.setForeground(new Color(0, 0, 0));
 		btnPlay.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		btnPlay.setBackground(new Color(255, 255, 255));
 		panel.add(btnPlay);
 		
 		JButton btnLoad = new JButton("LOAD");
-		btnLoad.setForeground(new Color(0, 0, 0));
 		btnLoad.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		btnLoad.setBackground(new Color(255, 255, 255));
 		panel.add(btnLoad);
 		
 		JButton btnRules = new JButton("RULES");
-		btnRules.setForeground(new Color(0, 0, 0));
 		btnRules.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		btnRules.setBackground(new Color(255, 255, 255));
 		panel.add(btnRules);
 		
 		JButton btnExit = new JButton("EXIT");
-		btnExit.setForeground(new Color(0, 0, 0));
 		btnExit.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		btnExit.setBackground(new Color(255, 255, 255));
 		panel.add(btnExit);
 		
 		JLabel lblNewLabel_2 = new JLabel(" ");
