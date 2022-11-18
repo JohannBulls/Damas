@@ -123,8 +123,9 @@ public class DamasGUI extends JFrame {
 		JButton btnPlay = new JButton("PLAY");
 		btnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Tablero ta = new Tablero();
-				ta.setVisible(true);
+				JuegOps juOps = new JuegOps();
+				juOps.setVisible(true);
+				dispose();
 			}
 		});
 		btnPlay.setFont(new Font("Tahoma", Font.PLAIN, 30));
