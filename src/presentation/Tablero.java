@@ -11,8 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import test.Tablero;
-
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -20,6 +18,10 @@ import java.awt.FlowLayout;
 
 public class Tablero extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private TableroGame mTablero = new TableroGame();
 	
 	/**
@@ -57,12 +59,12 @@ public class Tablero extends JFrame {
 		panelCenter.setBackground(new Color(0, 128, 0));
 		getContentPane().add(panelCenter, BorderLayout.CENTER);
 		panelCenter.setLayout(new FlowLayout());
-		//Color Tablero
+		
 		mTablero.setBackground(new Color(128, 255, 255));
 		
 		getContentPane().add(mTablero,BorderLayout.CENTER);
 		
-		mTablero.setMatriz(5);
+		mTablero.setMatriz(12);
 		
 		mTablero.inicializar();
 		

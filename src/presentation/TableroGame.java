@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -53,6 +54,7 @@ public class TableroGame extends JPanel implements ComponentListener{
         
         this.setLayout(null);                
         
+        
     }
 	
 	public void inicializar() {
@@ -61,7 +63,17 @@ public class TableroGame extends JPanel implements ComponentListener{
 	    	for (int i =0 ; i < nMatriz ; i++) {
 	    		for (int j =0 ; j < nMatriz ; j++) {
 	    			JButton temp = new JButton();
-	    			temp.setText("("+(i+1)+","+(j+1)+")");	    			
+	    			ImageIcon peon = new ImageIcon();
+	    			temp.setBackground(Color.WHITE);
+	    			if ((i+j)%2 !=0) {
+	    				temp.setBackground(Color.BLACK);
+	    				if ((nMatriz/2)-2 >=i ) {
+		    				temp.setIcon(new ImageIcon(TableroGame.class.getResource("/image/peonV.png")));	 
+		    				}
+		    			else if ((nMatriz/2)+1 <=i ) {
+		    				temp.setIcon(new ImageIcon(TableroGame.class.getResource("/image/peonA.png")));
+		    				}
+	    			}	    			   			    			
 	    			nCasillas[i][j]=temp;
 	    			this.add(temp);
 	    			
@@ -91,10 +103,4 @@ public class TableroGame extends JPanel implements ComponentListener{
     public int getMatriz() {
         return nMatriz;
     }
-
-
-
-	
-	
-
 }
