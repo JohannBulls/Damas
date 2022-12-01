@@ -1,7 +1,8 @@
 package presentation;
 
 import java.awt.Color;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
@@ -15,14 +16,15 @@ public class TableroGame extends JPanel implements ComponentListener {
     /**
      *
      */
-    private static final long serialVersionUID = 1L;
-    private JButton[][] nCasillas = null;
+	private static final long serialVersionUID = 1L;
+    private JButton[][] nCasillas;
     private int nMatriz = 10;
+    private int x=99999999;
+	private int y=99999999;
     private int TableroVis[][]  = new int[nMatriz][nMatriz];
-    private int verdes[][] = null;
-    private int amari[][] = null;
+    /*private int verdes[][] = null;
+    private int amari[][] = null;*/
     private int mSeparacion = 2;
-    
 
     public void acomodar() {
         int ancho = this.getWidth();
@@ -39,11 +41,12 @@ public class TableroGame extends JPanel implements ComponentListener {
         for (int i = 0; i < nMatriz; i++) {
             for (int j = 0; j < nMatriz; j++) {
                 JButton temp = nCasillas[i][j];
-                TableroVis[i][j]= 0;
-                temp.setBounds(xOffset + j * tamaAncho, yOffset + i * tamaAlto, tamaAncho - mSeparacion, tamaAlto - mSeparacion);             
+
+                temp.setBounds(xOffset + j * tamaAncho, yOffset + i * tamaAlto, tamaAncho - mSeparacion, tamaAlto - mSeparacion);
+
             }
         }
-        
+
     }
 
     /**
@@ -64,54 +67,31 @@ public class TableroGame extends JPanel implements ComponentListener {
         nCasillas = new JButton[nMatriz][nMatriz];
         for (int i = 0; i < nMatriz; i++) {
             for (int j = 0; j < nMatriz; j++) {
-                JButton temp = new JButton();
-                ImageIcon peon = new ImageIcon();
-                temp.setBackground(Color.WHITE);
-                
-                if ((i + j) % 2 != 0) {
-                    temp.setBackground(Color.BLACK);
-                    TableroVis[i][j]= 1;
+            	nCasillas[i][j] = new JButton();
+            	nCasillas[i][j].setBackground(Color.WHITE);
+            	TableroVis[i][j]=0;
+            	nCasillas[i][j].setEnabled(false);
+            	if ((i + j) % 2 != 0) {
+            		nCasillas[i][j].setBackground(Color.BLACK);
+            		nCasillas[i][j].setEnabled(true);
+            		TableroVis[i][j]=1;
                     if ((nMatriz / 2) - 2 >= i) {
-                        temp.setIcon(new ImageIcon(TableroGame.class.getResource("/image/peonV.png")));
-                        TableroVis[i][j]= 2;
-                        verdes[i][j]=2;
+                    	TableroVis[i][j]=2;
+                    	nCasillas[i][j].setIcon(new ImageIcon(TableroGame.class.getResource("/image/peonV.png")));
                     } else if ((nMatriz / 2) + 1 <= i) {
-                        temp.setIcon(new ImageIcon(TableroGame.class.getResource("/image/peonA.png")));
-                        TableroVis[i][j]= 3;
-                        amari[i][j]= 3;
+                    	TableroVis[i][j]=3;
+                    	nCasillas[i][j].setIcon(new ImageIcon(TableroGame.class.getResource("/image/peonA.png")));
                     }
                 }
-                nCasillas[i][j] = temp;
-                this.add(temp);
-
+            	ButtonController bt = new ButtonController();
+            	nCasillas[i][j].addActionListener(bt);
+            	this.add(nCasillas[i][j]);
             }
         }
-        
     }
     
-    public void juego() {
-    	for (int i = 0; i < nCasillas.length; i++) {
-    		   for (int j = 0; j < nCasillas[].length; j++) {
-    			   nCasillas[i]j].setOnClickListener(new OnClickListener (){
-    		                   public void onClick(View view){ 
-    		                         //haces lo que necesites
-    		                   }  
-    		              });   
-    		   }  
-    		}
-    }
     
-    public void validar() {
-    	if (TableroVis[x][y] != 0) {
-    		JOptionPane.showMessageDialog(null, "Esta casilla no esta vacia","ALERTA!!!",JOptionPane.PLAIN_MESSAGE);
-    	}
-    }
     
-    public void moverficha() {
-    	validar();
-    }
-    
-
     public void componentResized(ComponentEvent e) {
 
         this.acomodar();
@@ -134,4 +114,103 @@ public class TableroGame extends JPanel implements ComponentListener {
     public int getMatriz() {
         return nMatriz;
     }
+    
+    private class ButtonController implements ActionListener{
+    	
+    	@Override
+    public void actionPerformed(ActionEvent e) {
+    		
+    		for (int i = 0; i < nMatriz; i++) {
+                for (int j = 0; j < nMatriz; j++) {
+                	if (e.getSource().equals(nCasillas[i][j])) {
+                		System.out.println(x+","+y);
+                		if (x!=-99999999 && y !=99999999) {
+                			validar(i,j,x,y);
+                			x=99999999;
+                			y=99999999;
+                		}else {
+                			x=i;
+                    		y=j;
+                		}
+                	}
+                }
+              }
+    		
+    	}
+    	
+    }
+    
+    
+    public void validar(int i ,int j,int x,int y) {
+    	if (nCasillas[i][j].getIcon()==null) {
+    		if (x+1 == i || x-1==i) {
+    			peon( i , j, x, y);
+    		} else if ((x+1>i&&(y+2==j||y-2==j)) || (x-1<i&&(y+2==j||y-2==j))  ) {
+    			mata(i , j, x, y);
+    		}
+    		
+    	}else {
+    		JOptionPane.showMessageDialog(null, "No se puede hacer esta Accion","ALERTA!!!",JOptionPane.PLAIN_MESSAGE);
+    	}
+    }
+    
+
+    public void peon(int i ,int j,int x,int y) {
+    		if(i==x+1 && (y==j+1 || y==j-1) && TableroVis[x][y]==2) {
+    			System.out.println("-------mueve------");
+    			System.out.println(TableroVis[x][y]+","+x+"-"+y+"------>"+TableroVis[i][j]+","+i+"-"+j);
+    			TableroVis[x][y]=1;
+    			TableroVis[i][j]=2;
+    			nCasillas[i][j].setIcon(new ImageIcon(TableroGame.class.getResource("/image/peonV.png")));
+    			nCasillas[x][y].setIcon(null);
+    			System.out.println(TableroVis[x][y]+","+x+"-"+y+"------>"+TableroVis[i][j]+","+i+"-"+j);
+    		}else if(i==x-1 && (y==j+1 || y==j-1) && TableroVis[x][y]==3) {
+    			System.out.println("-------mueve------");
+    			System.out.println(TableroVis[x][y]+","+x+"-"+y+"------>"+TableroVis[i][j]+","+i+"-"+j);
+    			TableroVis[x][y]=1;
+    			TableroVis[i][j]=3;
+    			nCasillas[i][j].setIcon(new ImageIcon(TableroGame.class.getResource("/image/peonA.png")));
+    			nCasillas[x][y].setIcon(null);
+    			System.out.println(TableroVis[x][y]+","+x+"-"+y+"------>"+TableroVis[i][j]+","+i+"-"+j);
+    		}
+    	
+    }
+    
+   public void mata (int i ,int j,int x,int y) {
+	   if((TableroVis[x+1][y+1]==2 || TableroVis[x+1][y-1]==2)  && x+2 == i) {
+		   System.out.println("-------mata------");
+			System.out.println(TableroVis[x][y]+","+x+"-"+y+"------>"+TableroVis[i][j]+","+i+"-"+j);
+			TableroVis[x][y]=1;
+			TableroVis[i][j]=2;
+			nCasillas[i][j].setIcon(new ImageIcon(TableroGame.class.getResource("/image/peonV.png")));
+			nCasillas[x][y].setIcon(null);
+			if (j>y){
+				TableroVis[x+1][j+1]=1;
+				nCasillas[x+1][y+1].setIcon(null);
+				System.out.println(TableroVis[x][y]+","+x+"-"+y+"------>"+TableroVis[i][j]+","+i+"-"+j);
+			}else {
+				TableroVis[x+1][j-1]=1;
+				nCasillas[x+1][y-1].setIcon(null);
+				System.out.println(TableroVis[x][y]+","+x+"-"+y+"------>"+TableroVis[i][j]+","+i+"-"+j);
+			}
+		}else if((TableroVis[x-1][y+1]==3 || TableroVis[x-1][y-1]==3)  && x-2 == i) {
+			System.out.println("-------mata------");
+			System.out.println(TableroVis[x][y]+","+x+"-"+y+"------>"+TableroVis[i][j]+","+i+"-"+j);
+			TableroVis[x][y]=1;
+			TableroVis[i][j]=3;
+			nCasillas[i][j].setIcon(new ImageIcon(TableroGame.class.getResource("/image/peonA.png")));
+			nCasillas[x][y].setIcon(null);
+			if (j>y){
+				TableroVis[x-1][j+1]=1;
+				nCasillas[x-1][y+1].setIcon(null);
+				System.out.println(TableroVis[x][y]+","+x+"-"+y+"------>"+TableroVis[i][j]+","+i+"-"+j);
+			}else {
+				TableroVis[x-1][j-1]=1;
+				nCasillas[x-1][y-1].setIcon(null);
+				System.out.println(TableroVis[x][y]+","+x+"-"+y+"------>"+TableroVis[i][j]+","+i+"-"+j);
+			}
+		}
+   }
 }
+
+

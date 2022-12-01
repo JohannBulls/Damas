@@ -65,7 +65,7 @@ public class Tablero extends JFrame {
 
         getContentPane().add(mTablero, BorderLayout.CENTER);
 
-        mTablero.setMatriz(14);
+        mTablero.setMatriz(10);
 
         mTablero.inicializar();
 
@@ -107,6 +107,7 @@ public class Tablero extends JFrame {
         panel_12.add(lblNewLabel_1, BorderLayout.WEST);
 
         JButton btnNewButton_1 = new JButton(" ");
+        btnNewButton_1.setEnabled(false);
         btnNewButton_1.setBackground(Color.RED);
         panel_12.add(btnNewButton_1, BorderLayout.EAST);
 
