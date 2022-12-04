@@ -21,7 +21,7 @@ public class TableroGame extends JPanel implements ComponentListener {
     private int nMatriz = 10;
     private int x=99999999;
 	private int y=99999999;
-    private int TableroVis[][]  = new int[nMatriz][nMatriz];
+	int[][] TableroVis = new int[nMatriz][nMatriz];
 
     /*private int verdes[][] = null;
     private int amari[][] = null;*/
@@ -125,9 +125,10 @@ public class TableroGame extends JPanel implements ComponentListener {
                 for (int j = 0; j < nMatriz; j++) {
                 	if (e.getSource().equals(nCasillas[i][j])) {
                 		if (x!=-99999999 && y !=99999999) {
-                			validar(i,j,x,y);
+                			validar(i,j,x,y,TableroVis );
                 			x=99999999;
                 			y=99999999;
+                			imprimri();
                 		}else {
                 			x=i;
                     		y=j;
@@ -140,27 +141,42 @@ public class TableroGame extends JPanel implements ComponentListener {
     	
     }
     
+   public void imprimri() {
+	   
+	   
+	   for (int x=0; x < TableroVis.length; x++) {
+		   System.out.print("|");
+		   for (int y=0; y < TableroVis[x].length; y++) {
+		     System.out.print (TableroVis[x][y]);
+		     if (y!=TableroVis[x].length-1) System.out.print("\t");
+		   }
+		   System.out.println("|");
+		 }
+   }
     
-    public void validar(int i ,int j,int x,int y) {
+    public void validar(int i ,int j,int x,int y, int[][] TableroVis ) {
     	int[] arriba = {2,6,8};
     	int[] abajo = {3,7,9};
     	int tam=arriba.length;
+    	int f;
     	//Espacio en Blanco
-    	if (TableroVis[i][j]==1) {
+    	if (this.TableroVis[i][j]==1) {
     		for (int k =0;k<tam;k++) {
     			//Fichas de arriba solo se peude mover un espacio
-        		if (TableroVis[x][y]==arriba[k]&& i==x+1 ) {
-        			peon_arriba(i ,j, x, y);
+        		if (this.TableroVis[x][y]==arriba[k] && i==x+1 ) {
+        			f=this.TableroVis[x][y];
+        			peon_arriba(i ,j, x, y,f,TableroVis);
         			 break;
         		//Fichas de abajo solo se peude mover un espacio
-        		}else if(TableroVis[x][y]==abajo[k] && i==x-1 ) {
-        			peon_abajo(i ,j, x, y);
+        		}else if(this.TableroVis[x][y]==abajo[k] && i==x-1 ) {
+        			f=this.TableroVis[x][y];
+        			peon_abajo(i ,j, x, y,f,TableroVis);
         			 break;
-        		}else if(TableroVis[x][y]==arriba[k] && i==x+2 && (TableroVis[x+1][y+1]==abajo[k] || TableroVis[x+1][y-1]==abajo[k]) ) {
-        			peon_arribaMata(i ,j, x, y);
+        		}else if(this.TableroVis[x][y]==arriba[k] && i==x+2 && (this.TableroVis[x+1][y+1]==abajo[k] || this.TableroVis[x+1][y-1]==abajo[k]) ) {
+        			peon_arribaMata(i ,j, x, y,TableroVis);
         			 break;
-        		}else if(TableroVis[x][y]==abajo[k] && i==x-2 && (TableroVis[x-1][y+1]==arriba[k] || TableroVis[x-1][y-1]==arriba[k]) ) {
-        			peon_abajoMata(i ,j, x, y);
+        		}else if(this.TableroVis[x][y]==abajo[k] && i==x-2 && (this.TableroVis[x-1][y+1]==arriba[k] || this.TableroVis[x-1][y-1]==arriba[k]) ) {
+        			peon_abajoMata(i ,j, x, y,TableroVis);
         			 break;
         		}else {
         			JOptionPane.showMessageDialog(null, "No se puede hacer esta Accion","ALERTA!!!",JOptionPane.PLAIN_MESSAGE);
@@ -172,78 +188,84 @@ public class TableroGame extends JPanel implements ComponentListener {
 		}
     	
     }
+    public void derecha() {}
     
-    public void peon_arriba(int i ,int j,int x,int y) {
+    public void izquirda() {}
+    
+    public void peon_arriba(int i ,int j,int x,int y, int f, int[][] TableroVis) {
     	System.out.println("mueve");
-    	System.out.println(TableroVis[x][y]+","+x+"-"+y+"------>"+TableroVis[i][j]+","+i+"-"+j);
-    	TableroVis[x][y]=1;
-		TableroVis[i][j]=2;
+    	System.out.println(this.TableroVis[x][y]+","+x+"-"+y+"------>"+this.TableroVis[i][j]+","+i+"-"+j);
+    	this.TableroVis[x][y]=1;
+    	this.TableroVis[i][j]=f;
 		nCasillas[i][j].setIcon(new ImageIcon(TableroGame.class.getResource("/image/peonV.png")));
 		nCasillas[x][y].setIcon(null);
 		System.out.println(".                                                        .");
-		System.out.println(TableroVis[x][y]+","+x+"-"+y+"------>"+TableroVis[i][j]+","+i+"-"+j);
+		System.out.println(this.TableroVis[x][y]+","+x+"-"+y+"------>"+this.TableroVis[i][j]+","+i+"-"+j);
     }
 
-    public void peon_abajo(int i ,int j,int x,int y) {
+    public void peon_abajo(int i ,int j,int x,int y,int f,int[][] TableroVis) {
     	System.out.println("mueve");
-    	System.out.println(TableroVis[x][y]+","+x+"-"+y+"------>"+TableroVis[i][j]+","+i+"-"+j);
-    	TableroVis[x][y]=1;
-		TableroVis[i][j]=3;
+    	System.out.println(this.TableroVis[x][y]+","+x+"-"+y+"------>"+this.TableroVis[i][j]+","+i+"-"+j);
+    	this.TableroVis[x][y]=1;
+    	this.TableroVis[i][j]=f;
 		nCasillas[i][j].setIcon(new ImageIcon(TableroGame.class.getResource("/image/peonA.png")));
 		nCasillas[x][y].setIcon(null);
 		System.out.println(".                                                        .");
-		System.out.println(TableroVis[x][y]+","+x+"-"+y+"------>"+TableroVis[i][j]+","+i+"-"+j);
+		System.out.println(this.TableroVis[x][y]+","+x+"-"+y+"------>"+this.TableroVis[i][j]+","+i+"-"+j);
     }
    
-    public void peon_arribaMata(int i ,int j,int x,int y){
+    public void peon_arribaMata(int i ,int j,int x,int y,int[][] TableroVis){
     	
     	System.out.println(y+"<"+j);
-		if (j>y){
+		if (y<j){
 			System.out.println("erro 1");
-			System.out.println("Ficha Muerta   " + TableroVis[x+1][y+1]);
-			TableroVis[x+1][j+1]=1;
-			nCasillas[x+1][y+1].setIcon(null);
-			System.out.println("Ficha Muerta   " + TableroVis[x+1][y+1]);
+			System.out.println("Ficha Muerta   " + this.TableroVis[x+1][y+1]);
+			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>> F "+i+j+" I"+x+y);
+			this.TableroVis[(x+1)][(y+1)]=1;
+			nCasillas[(x+1)][(y+1)].setIcon(null);
+			System.out.println("Ficha Muerta   " +this. TableroVis[x+1][y+1]);
 		}else {
 			System.out.println("erro 2");
-			System.out.println("Ficha Muerta   " + TableroVis[x+1][y-1]);
-			TableroVis[x+1][j-1]=1;
-			nCasillas[x+1][y-1].setIcon(null);
-			System.out.println("Ficha Muerta   " + TableroVis[x+1][y-1]);
+			System.out.println("Ficha Muerta   " + this.TableroVis[x+1][y-1]);
+			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>> F "+i+j+" I"+x+y);
+			this.TableroVis[(x+1)][(y-1)]=1;
+			nCasillas[(x+1)][(y-1)].setIcon(null);
+			System.out.println("Ficha Muerta   " + this.TableroVis[(x+1)][(j-1)]);
 		}
 		System.out.println(">>>Mata<<<");
-    	System.out.println(TableroVis[x][y]+","+x+"-"+y+"------>"+TableroVis[i][j]+","+i+"-"+j);
-    	TableroVis[x][y]=1;
-		TableroVis[i][j]=2;
+    	System.out.println(this.TableroVis[x][y]+","+x+"-"+y+"------>"+this.TableroVis[i][j]+","+i+"-"+j);
+    	this.TableroVis[x][y]=1;
+    	this.TableroVis[i][j]=2;
 		nCasillas[i][j].setIcon(new ImageIcon(TableroGame.class.getResource("/image/peonV.png")));
 		nCasillas[x][y].setIcon(null);
 		System.out.println(".                                                        .");
-		System.out.println(TableroVis[x][y]+","+x+"-"+y+"------>"+TableroVis[i][j]+","+i+"-"+j);
+		System.out.println(this.TableroVis[x][y]+","+x+"-"+y+"------>"+this.TableroVis[i][j]+","+i+"-"+j);
     }
     
-   public void peon_abajoMata (int i ,int j,int x,int y) {
+   public void peon_abajoMata (int i ,int j,int x,int y,int[][] TableroVis) {
 	   System.out.println(y+"<"+j);
 		if (y<j){
-			System.out.println("erro 3");
-			System.out.println("Ficha Muerta   " + TableroVis[x-1][y+1]);
-			TableroVis[x-1][j+1]=1;
-			nCasillas[x-1][y+1].setIcon(null);
-			System.out.println("Ficha Muerta   " + TableroVis[x-1][y+1]);
+			System.out.println("Ficha Muerta   " + this.TableroVis[x-1][y+1]);
+			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>> F "+i+j+" I"+x+y);
+			this.TableroVis[(x-1)][(y+1)]=1;
+			nCasillas[(x-1)][(y+1)].setIcon(null);
+			System.out.println("Ficha Muerta   " +this.TableroVis[x-1][y+1]);
 		}else {
 			System.out.println("erro 4");
-			System.out.println("Ficha Muerta   " + TableroVis[x-1][y-1]);
-			TableroVis[x-1][j-1]=1;
-			nCasillas[x-1][y-1].setIcon(null);
-			System.out.println("Ficha Muerta   " + TableroVis[x-1][y-1]);
+			System.out.println("Ficha Muerta   " + this.TableroVis[x-1][y-1]);
+			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>> F "+i+j+" I"+x+y);
+			this.TableroVis[(x-1)][(y-1)]=1;
+			nCasillas[(x-1)][(y-1)].setIcon(null);
+			System.out.println("Ficha Muerta   " + this.TableroVis[x-1][y-1]);
 		}
 		System.out.println(">>>Mata<<<");
-	   	System.out.println(TableroVis[x][y]+","+x+"-"+y+"------>"+TableroVis[i][j]+","+i+"-"+j);
-	   	TableroVis[x][y]=1;
-		TableroVis[i][j]=3;
+	   	System.out.println(this.TableroVis[x][y]+","+x+"-"+y+"------>"+this.TableroVis[i][j]+","+i+"-"+j);
+	   	this.TableroVis[x][y]=1;
+	   	this.TableroVis[i][j]=3;
 		nCasillas[i][j].setIcon(new ImageIcon(TableroGame.class.getResource("/image/peonA.png")));
 		nCasillas[x][y].setIcon(null);
 		System.out.println(".                                                        .");
-		System.out.println(TableroVis[x][y]+","+x+"-"+y+"------>"+TableroVis[i][j]+","+i+"-"+j);
+		System.out.println(this.TableroVis[x][y]+","+x+"-"+y+"------>"+this.TableroVis[i][j]+","+i+"-"+j);
    }
 }
 
