@@ -146,8 +146,7 @@ public class TableroGame extends JPanel implements ComponentListener {
     public void validar(int i ,int j,int x,int y, int[][] TableroVis ) {
     	int[] arriba = {2,6,8};
     	int[] abajo = {3,7,9};
-    	int[] arribaRe = {2,4,6,8};
-    	int[] abajoRe = {3,5,7,9};
+    	
     	int tam=arriba.length;
     	int f;
     	//Espacio en Blanco
@@ -227,21 +226,47 @@ public class TableroGame extends JPanel implements ComponentListener {
     }
 
     public void reina(int i ,int j,int x,int y, int f, int[][] TableroVis) {
-    	if(this.TableroVis[x][y]==4 ){
-			tipoficha(i,j,f);
-		}else if(this.TableroVis[x][y]==5 ){
-			tipoficha(i,j,f);
-		}
-    	this.TableroVis[x][y]=1;
-    	this.TableroVis[i][j]=f;
-		nCasillas[x][y].setIcon(null);
+    	int w = 0;
+    	int[] arribaRe = {2,4,6,8};
+    	int[] abajoRe = {3,5,7,9};
+    	int[] datos = null;
+		if (f==4) {
+    		datos=abajoRe;
+    	}else if (f==5) {
+    		datos=arribaRe;
+    	}
+    	while(w!=-1) {
+    		for (int r=0; r<datos.length;r++) {
+    			if (TableroVis[x+w][y+w]==datos[r]  && x<i && y<j ) {
+        			this.TableroVis[(x+w)][(y+w)]=1;
+    				nCasillas[(x+w)][(y+w)].setIcon(null);
+        			w=-1;
+        		}else if((TableroVis[x+w][y-w]!=datos[r] || TableroVis[x+w][y-w]==1) && x<i && y>j) {
+        			this.TableroVis[(x+w)][(y-w)]=1;
+    				nCasillas[(x+w)][(y-w)].setIcon(null);
+        			w=-1;
+        		}else if(TableroVis[x-w][y+w]==1 && x>i && y<j) {
+        			this.TableroVis[(x-w)][(y+w)]=1;
+    				nCasillas[(x-w)][(y+w)].setIcon(null);
+        			w=-1;
+        		}else if(TableroVis[x-w][y-w]==1 && x>i && y>j) {
+        			this.TableroVis[(x-w)][(y-w)]=1;
+    				nCasillas[(x-w)][(y-w)].setIcon(null);
+        			w=-1;
+        		}else {
+        		w++;
+        		}
+    		}
+    		
+    	}
+    	
     }
     
     public void mataAbajo(int i ,int j,int x,int y, int f, int[][] TableroVis) {
     	int[] arribaRe = {2,4,6,8};
     	int h=0;
     	for(int w=0;w<arribaRe.length;w++) {
-    		while(h!=99999999) {
+    		wheile(h!=99999999) {
     			if (y<j && TableroVis[x-h][y+h]==arribaRe[w]) {
     				this.TableroVis[(x-h)][(y+h)]=1;
     				nCasillas[(x-h)][(y+h)].setIcon(null);
