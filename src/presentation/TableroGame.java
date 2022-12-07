@@ -146,6 +146,8 @@ public class TableroGame extends JPanel implements ComponentListener {
     public void validar(int i ,int j,int x,int y, int[][] TableroVis ) {
     	int[] arriba = {2,6,8};
     	int[] abajo = {3,7,9};
+    	int[] arribaRe = {2,4,6,8};
+    	int[] abajoRe = {3,5,7,9};
     	
     	int tam=arriba.length;
     	int f;
@@ -266,7 +268,7 @@ public class TableroGame extends JPanel implements ComponentListener {
     	int[] arribaRe = {2,4,6,8};
     	int h=0;
     	for(int w=0;w<arribaRe.length;w++) {
-    		wheile(h!=99999999) {
+    		while(h!=99999999) {
     			if (y<j && TableroVis[x-h][y+h]==arribaRe[w]) {
     				this.TableroVis[(x-h)][(y+h)]=1;
     				nCasillas[(x-h)][(y+h)].setIcon(null);
