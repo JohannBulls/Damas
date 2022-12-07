@@ -180,11 +180,12 @@ public class TableroGame extends JPanel implements ComponentListener {
         			if (this.TableroVis[x][y]==4) {
         				f=4;
         				reina(i ,j, x, y,f,TableroVis);
+        				break;
         			}else {
         				f=5;
         				reina(i ,j, x, y,f,TableroVis);
+        				break;
         			}
-        			break;
         		}else {
         			JOptionPane.showMessageDialog(null, "No se puede hacer esta Accion","ALERTA!!!",JOptionPane.PLAIN_MESSAGE);
         			break;
@@ -228,6 +229,7 @@ public class TableroGame extends JPanel implements ComponentListener {
     }
 
     public void reina(int i ,int j,int x,int y, int f, int[][] TableroVis) {
+<<<<<<< HEAD
     	int w = 0;
     	int[] arribaRe = {2,4,6,8};
     	int[] abajoRe = {3,5,7,9};
@@ -262,6 +264,87 @@ public class TableroGame extends JPanel implements ComponentListener {
     		
     	}
     	
+=======
+    	int[] abajoRe = {3,5,7,9};
+    	int[] arribaRe = {2,4,6,8};
+    	int k=1;
+    	int[] datos = null;
+    	boolean valor = false;
+		if(f==4 ){
+			datos=abajoRe;
+		}else if(f==5 ){
+			datos=arribaRe;
+		}
+			while(k!=-1) {
+				for (int w=0;w<datos.length;w++) {
+				if(x<x+k && y<y+k && (TableroVis[x+k][y+k]==1|| TableroVis[x+k][y+k]!=1)) {
+					if (TableroVis[x+k][y+k]==datos[w]) {
+						this.TableroVis[x+k][y+k]=1;
+						nCasillas[x+k][y+k].setIcon(null);
+
+					}
+
+					this.TableroVis[x][y]=1;
+			    	this.TableroVis[i][j]=f;
+			    	tipoficha(i,j,f);
+					nCasillas[x][y].setIcon(null);
+					valor=false;
+					k=-1;
+					break;
+					
+				}else if(x<x+k && y>y-k && (TableroVis[x+k][y-k]==1|| TableroVis[x+k][y-k]!=1)) {
+					if (TableroVis[x+k][y-k]==datos[w]) {
+						this.TableroVis[x+k][y-k]=1;
+						nCasillas[x+k][y-k].setIcon(null);
+					}
+					
+					this.TableroVis[x][y]=1;
+			    	this.TableroVis[i][j]=f;
+			    	tipoficha(i,j,f);
+					nCasillas[x][y].setIcon(null);
+					valor=false;
+					k=-1;
+					break;
+					
+				}else if(x>x-k && y<y+k && (TableroVis[x-k][y+k]==1|| TableroVis[x-k][y+k]!=1)) {
+					if (TableroVis[x-k][y+k]==datos[w]) {
+						this.TableroVis[x-k][y+k]=1;
+						nCasillas[x-k][y+k].setIcon(null);
+					}
+					
+					this.TableroVis[x][y]=1;
+			    	this.TableroVis[i][j]=f;
+			    	tipoficha(i,j,f);
+					nCasillas[x][y].setIcon(null);
+					valor=false;
+					k=-1;
+					break;
+					
+				}else if(x>x-k && y>y-k && (TableroVis[x-k][y-k]==1|| TableroVis[x-k][y-k]!=1)) {
+					if (TableroVis[x-k][y-k]==datos[w]) {
+						this.TableroVis[x-k][y-k]=1;
+						nCasillas[x-k][y-k].setIcon(null);
+						
+					}
+					this.TableroVis[x][y]=1;
+			    	this.TableroVis[i][j]=f;
+			    	tipoficha(i,j,f);
+					nCasillas[x][y].setIcon(null);
+					valor=false;
+					k=-1;
+					break;
+					
+				} else {
+					k++;
+					valor=true;
+				}
+				}
+			}
+		
+		if (valor==true) {
+			JOptionPane.showMessageDialog(null, "No se puede hacer esta Accion","ALERTA!!!",JOptionPane.PLAIN_MESSAGE);
+		}
+>>>>>>> fallo
     }
     
     public void mataAbajo(int i ,int j,int x,int y, int f, int[][] TableroVis) {
@@ -275,7 +358,7 @@ public class TableroGame extends JPanel implements ComponentListener {
     				h=99999999;
     				break;
         		}
-    			else if(y>j && TableroVis[x+h][y-h]==arribaRe[w]){
+    			else if(y>j && TableroVis[x-h][y-h]==arribaRe[w]){
     				this.TableroVis[(x-h)][(y-h)]=1;
     				nCasillas[(x-h)][(y-h)].setIcon(null);
     				h=99999999;
@@ -295,7 +378,6 @@ public class TableroGame extends JPanel implements ComponentListener {
     
     public void mataArriba(int i ,int j,int x,int y, int f, int[][] TableroVis) {
     	int[] abajoRe = {3,5,7,9};
-    	int[] arribaRe = {2,4,6,8};
     	int h=0;
     	for(int w=0;w<abajoRe.length;w++) {
     		while(h!=99999999) {

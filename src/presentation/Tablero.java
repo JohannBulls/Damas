@@ -65,7 +65,7 @@ public class Tablero extends JFrame {
 
         getContentPane().add(mTablero, BorderLayout.CENTER);
 
-        mTablero.setMatriz(10);
+        mTablero.setMatriz(6);
 
         mTablero.inicializar();
 
