@@ -145,7 +145,7 @@ public class TableroGame extends JPanel implements ComponentListener {
     
     public void validar(int i ,int j,int x,int y, int[][] TableroVis ) {
 
-    	int[] fichaOtra = {6,7,8,9};
+    	int[] fichaOtra = {6,7,8,9,10,11};
 
     	
     	int tam=fichaOtra.length;
@@ -154,36 +154,26 @@ public class TableroGame extends JPanel implements ComponentListener {
     	if (this.TableroVis[i][j]==1 && ((j-y)/(i-x)==-1 || (j-y)/(i-x)==1)) {
     		for (int k =0;k<tam;k++) {
     			//Fichas peon de arriba solo se peude mover un espacio
-        		if (((this.TableroVis[x][y]==2 && x+1==i )|| (this.TableroVis[x][y]==3 && x-1==i))  ) {
-        			if (this.TableroVis[x][y]==2) {
-        				f=2;
-        				moverpeon(i ,j, x, y,f,TableroVis);
-        			}else if (this.TableroVis[x][y]==3){
-        				f=3;
-        				moverpeon(i ,j, x, y,f,TableroVis);
-        			}
-        			 break;
+        		if ((this.TableroVis[x][y]==2 && (x+1)==i )|| (this.TableroVis[x][y]==3 && (x-1)==i)) {
+        			f=TableroVis[x][y];
+        			moverpeon(i ,j, x, y,f,TableroVis);
+        			break;
         		}else if (this.TableroVis[x][y] == fichaOtra[k] && (x+1==i || x-1 ==i) ) {
         			f=this.TableroVis[x][y];
         			moverpeon(i ,j, x, y,f,TableroVis);
         			break;
-        		}else if (((this.TableroVis[x][y]==2 && x+2==i ) || (this.TableroVis[x][y]==3 && x-2==i)) ){
-        			if (this.TableroVis[x][y]==2) {
-        				f=2;
-        				matarpeon(i ,j, x, y,f,TableroVis);
-        			}else if (this.TableroVis[x][y]==3){
-        				f=3;
-        				matarpeon(i ,j, x, y,f,TableroVis);
-        			}
-        			 break;
-        		}else if(this.TableroVis[x][y] == fichaOtra[k] && (x+2==i || x-2 ==i)){
-        			f=TableroVis[x][y];
-        			matarfichas(i ,j, x, y,f,TableroVis);
+        		}else if ((this.TableroVis[x][y]==2 && (x+2)==i )  || (this.TableroVis[x][y]==3 && (x-2)==i) ){
+        			f=this.TableroVis[x][y];
+        			matarpeon(i ,j, x, y,f,TableroVis);
         			break;
-    			}else if(this.TableroVis[x][y] == 4 || this.TableroVis[x][y] == 5 ){
-        			f=TableroVis[x][y];
-        			matarfichas(i ,j, x, y,f,TableroVis);
-        			break;
+    			}else if(this.TableroVis[x][y] == fichaOtra[k] && (x+2==i || x-2 ==i)){
+    				f=this.TableroVis[x][y];
+    				matar(i ,j, x, y,f,TableroVis);
+    				break;
+    			}else if(this.TableroVis[x][y]== 4   || this.TableroVis[x][y]== 5 ){
+    				f=this.TableroVis[x][y];
+    				matar(i ,j, x, y,f,TableroVis);
+    				break;
     			}else {
         			JOptionPane.showMessageDialog(null, "No se puede hacer esta Accion","ALERTA!!!",JOptionPane.PLAIN_MESSAGE);
         			break;
@@ -204,6 +194,132 @@ public class TableroGame extends JPanel implements ComponentListener {
     	System.out.println(TableroVis[x][y]+" "+x+","+y+"---->"+TableroVis[i][j]+" "+i+","+j);
     }
     
+    public void matar(int i ,int j,int x,int y,int f,int[][] TableroVis){
+    	int x_d = x-i;
+    	int y_d = y-j;
+    	int p=1;
+    	int xm = 0;
+		int ym = 0;
+    	int cont=0;
+    	int cont_no=0;
+    	int[] lista_no = null;
+    	int[] arriba= {2,4,6,8,10};
+    	int[] abajo= {3,5,7,9,11};
+    	int[] lista = null;
+		for (int u=0;u<arriba.length;u++) {
+    		
+			if(arriba[u]==TableroVis[x][y]) {
+    			lista=abajo;
+    			lista_no=arriba;
+    			break;
+    		}else if (abajo[u]==TableroVis[x][y]) {
+    			lista=arriba;
+    			lista_no=abajo;
+    			break;
+    		}
+    	}
+		
+		
+		if (x_d>0 && y_d>0) {
+			for (int m=0;m<lista.length;m++) {
+				while (p!=-1) {
+					if(TableroVis[x-p][y-p]==lista[m]) {
+						xm=x-p;
+						ym=y-p;
+						cont++;
+						p++;
+					}else if (TableroVis[x-p][y-p]==lista_no[m]) {
+						cont_no++;
+						p++;
+					}else if(TableroVis[x-p][y-p]==1) {
+						p++;
+					}else if(p==lista.length) {
+						p=-1;
+					}	
+				}
+			}
+			
+			fichasmatar_mover(i ,j, x, y,f,TableroVis,xm,ym,cont,cont_no);
+    	}else if(x_d<0 && y_d<0) {
+    		for (int m=0;m<lista.length;m++) {
+				while (p!=-1) {
+					if(TableroVis[x+p][y+p]==lista[m]) {
+						xm=x+p;
+						ym=y+p;
+						cont++;
+						p++;
+					}else if (TableroVis[x+p][y+p]==lista_no[m]) {
+						cont_no++;
+						p++;
+					}else if(TableroVis[x+p][y+p]==1) {
+						p++;
+					}else if(p==lista.length) {
+						p=-1;
+					}	
+				}
+			}
+			
+    		fichasmatar_mover(i ,j, x, y,f,TableroVis,xm,ym,cont,cont_no);
+    	}else if(x_d>0 && y_d<0) {
+    		for (int m=0;m<lista.length;m++) {
+				while (p!=-1) {
+					if(TableroVis[x-p][y+p]==lista[m]) {
+						xm=x-p;
+						ym=y+p;
+						cont++;
+						p++;
+					}else if (TableroVis[x-p][y+p]==lista_no[m]) {
+						cont_no++;
+						p++;
+					}else if(TableroVis[x-p][y+p]==1) {
+						p++;
+					}else if(p==lista.length) {
+						p=-1;
+					}	
+				}
+			}
+			
+    		fichasmatar_mover(i ,j, x, y,f,TableroVis,xm,ym,cont,cont_no);
+    	}else if(x_d<0 && y_d>0) {
+    		for (int m=0;m<lista.length;m++) {
+				while (p!=-1) {
+					if(TableroVis[x+p][y-p]==lista[m]) {
+						xm=x+p;
+						ym=y-p;
+						cont++;
+						p++;
+					}else if (TableroVis[x+p][y-p]==lista_no[m]) {
+						cont_no++;
+						p++;
+					}else if(TableroVis[x+p][y-p]==1) {
+						p++;
+					}else if(p==lista.length) {
+						p=-1;
+					}	
+				}
+			}
+    		fichasmatar_mover(i ,j, x, y,f,TableroVis,xm,ym,cont,cont_no);
+			
+    	}
+    	
+    }
+    
+    public void fichasmatar_mover(int i ,int j,int x,int y,int f,int[][] TableroVis,int xm, int ym,int cont,int cont_no) {
+    	if(cont==1 && cont_no==0) {
+			this.TableroVis[x][y]=1;
+			this.TableroVis[xm][ym]=1;
+            this.TableroVis[i][j]=f;
+			tipoficha(i,j,f);
+			nCasillas[xm][ym].setIcon(null);
+        	nCasillas[x][y].setIcon(null);
+		}else if(cont==0 && cont_no==0) {
+			this.TableroVis[x][y]=1;
+            this.TableroVis[i][j]=f;
+			tipoficha(i,j,f);
+        	nCasillas[x][y].setIcon(null);
+		}
+    } 
+
     public void tipoficha(int i ,int j,int f) {
     	if (f==2) {
     		nCasillas[i][j].setIcon(new ImageIcon(TableroGame.class.getResource("/image/peonV.png")));
@@ -280,83 +396,6 @@ public class TableroGame extends JPanel implements ComponentListener {
 		}
     }
 
-    public void matarfichas(int i ,int j,int x,int y,int f,int[][] TableroVis) {
-    	
-    	int[] fichasArriba= {2,4,6,8};
-    	int[] fichasAbajo= {3,5,7,9};
-    	int w = 0;
-    	int yf = 0;
-		int xf = 0;
-    	int[] datos = null;
-    	
-    	
-    	
-    		int cont = 0;
-        	boolean da = false;
-			for (int t=0;t<fichasArriba.length;t++) {
-        		if(f==fichasArriba[t]) {
-            		datos=fichasAbajo;
-            		da = false;
-            		break;
-            	}
-            	else if(f==fichasAbajo[t]){
-            		datos=fichasArriba;
-            		da = false;
-            		break;
-            	}else{
-            		da=true;
-            	}
-        	}
-        	System.out.println(da+"  "+cont);
-        		if (da!=true) {
-        			while (w!=(-1)) {
-        				System.out.println(w);
-        				for (int k=0;k<datos.length;k++) {
-        					System.out.println(datos[k]);
-        					if (TableroVis[x+w][y+w]==datos[k] && (j-y)/(i-x)==1) {
-        	            		cont++;
-        	            		xf=x+w;
-        	            		yf=y+w;
-        	            	}else if (TableroVis[x-w][y-w]==datos[k] && (j-y)/(i-x)==1){
-        	            		cont++;
-        	            		xf=x-w;
-        	            		yf=y-w;
-        	            	}else if (TableroVis[x-w][y+w]==datos[k] && (j-y)/(i-x)==-1){
-        	            		cont++;
-        	            		xf=x-w;
-        	            		yf=y+w;
-        	            	}else if (TableroVis[x+w][y-w]==datos[k] && (j-y)/(i-x)==-1){
-        	            		cont++;
-        	            		xf=x+w;
-        	            		yf=y-w;
-        	            	}else {
-        	            		w++;
-        	            	}w=(-1);
-            				System.out.println(w);
-        				}
-        				
-                	}
-        		}
-        		
-        		System.out.println(datos+""+cont);
-    		
-    		if (cont==1) {
-				this.TableroVis[x][y]=1;
-				this.TableroVis[xf][yf]=1;
-                this.TableroVis[i][j]=f;
-                tipoficha(i,j,f);
-            	nCasillas[xf][yf].setIcon(null);
-            	nCasillas[x][y].setIcon(null);
-    		}else if (cont==0){
-    			this.TableroVis[x][y]=1;
-                this.TableroVis[i][j]=f;
-                tipoficha(i,j,f);
-            	nCasillas[x][y].setIcon(null);
-    		}else {
-    			JOptionPane.showMessageDialog(null, "Imagen no encontrada","ALERTA!!!",JOptionPane.PLAIN_MESSAGE);
-    		}
-        	
-    }
 
     public void moverpeon(int i ,int j,int x,int y,int f,int[][] TableroVis) {
     	System.out.println("Movimineto");
