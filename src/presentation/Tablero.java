@@ -26,22 +26,28 @@ public class Tablero extends JFrame {
     private static final long serialVersionUID = 1L;
     private Image imagen;
     private TableroGame mTablero = new TableroGame();
-    
+    String player1;
+    String player2;
+	int size;
+
+
 
     /**
      * Create the frame.
      */
     public Tablero() {
     	getContentPane().setBackground(new Color(128, 128, 255));
-    	
         Ventana();
         getContentPane().setLayout(new BorderLayout(0, 0));
-        panelNorth();
-        panelWest();
-        panelCenter();
+        setdat(player1, player1, size);
+        panelWest();;
         panelEast();
         panelSouth();
-
+        
+    }
+    public void setdat(String player1 , String player2 ,int size) {
+    	panelNorth(player1,player2);
+		panelCenter(size);
     }
 
     public void Ventana() {
@@ -57,22 +63,24 @@ public class Tablero extends JFrame {
 
     }
 
-    public void panelCenter() {
+    public void panelCenter(int size) {
         JPanel panelCenter = new JPanel();
         panelCenter.setOpaque(false);
         getContentPane().add(panelCenter, BorderLayout.CENTER);
         panelCenter.setLayout(new FlowLayout());
 
         getContentPane().add(mTablero, BorderLayout.CENTER);
-
-        mTablero.setMatriz(6);
+        this.size=size;
+        mTablero.setMatriz(size);
 
         mTablero.inicializar();
 
     }
+  
 
-    public void panelNorth() {
-
+    public void panelNorth(String player1, String player2) {
+    	this.player1=player1;
+    	this.player2=player2;
         JPanel panelNorth = new JPanel();
         panelNorth.setOpaque(false);
         getContentPane().add(panelNorth, BorderLayout.NORTH);
@@ -98,10 +106,10 @@ public class Tablero extends JFrame {
         panel_12.setOpaque(false);
         panel_12.setLayout(new BorderLayout(0, 0));
 
-        JLabel lblNewLabel_3 = new JLabel("Player 1");
-        lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        panel_12.add(lblNewLabel_3);
+        JLabel lblplayer1 = new JLabel(player1+" ");
+        lblplayer1.setHorizontalAlignment(SwingConstants.CENTER);
+        lblplayer1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        panel_12.add(lblplayer1);
 
         JLabel lblNewLabel_1 = new JLabel("            ");
         panel_12.add(lblNewLabel_1, BorderLayout.WEST);
@@ -116,10 +124,10 @@ public class Tablero extends JFrame {
         panel_13.setOpaque(false);
         panel_13.setLayout(new BorderLayout(0, 0));
 
-        JLabel lblNewLabel_3_1 = new JLabel("Player 2");
-        lblNewLabel_3_1.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel_3_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        panel_13.add(lblNewLabel_3_1);
+        JLabel lblplayer2 = new JLabel(" "+player2);
+        lblplayer2.setHorizontalAlignment(SwingConstants.CENTER);
+        lblplayer2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        panel_13.add(lblplayer2);
 
         JLabel lblNewLabel_18 = new JLabel("            ");
         panel_13.add(lblNewLabel_18, BorderLayout.EAST);
@@ -162,7 +170,6 @@ public class Tablero extends JFrame {
 
         JLabel lblNewLabel_10 = new JLabel("                                                    ");
         panelEast.add(lblNewLabel_10, BorderLayout.SOUTH);
-
         JPanel panel_8 = new JPanel();
         panelEast.add(panel_8, BorderLayout.NORTH);
         panel_8.setOpaque(false);
@@ -177,4 +184,6 @@ public class Tablero extends JFrame {
         JLabel lblNewLabel_6 = new JLabel(" ");
         panelSouth.add(lblNewLabel_6);
     }
+
+
 }

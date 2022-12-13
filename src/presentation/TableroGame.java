@@ -22,6 +22,7 @@ public class TableroGame extends JPanel implements ComponentListener {
     private int x=99999999;
 	private int y=99999999;
 	int[][] TableroVis = new int[nMatriz][nMatriz];
+	int fi;
 
     /*private int verdes[][] = null;
     private int amari[][] = null;*/
@@ -179,13 +180,18 @@ public class TableroGame extends JPanel implements ComponentListener {
         			break;
         		}
         	}
-    		if(this.TableroVis[i][j]==2 && i==(nMatriz-1)){
-    			this.TableroVis[i][j]=4;
-    			f=4;
+
+			if(this.TableroVis[i][j]==2 && i==(nMatriz-1)){
+    			
+    			tipo_ficha da = new tipo_ficha(TableroVis[i][j]);
+                da.setVisible(true);
+				f=setf(fi);
     			tipoficha(i,j,f);
     		}else if(this.TableroVis[i][j]==3 && i==0){
-    			this.TableroVis[i][j]=5;
-    			f=5;
+    			tipo_ficha da = new tipo_ficha(TableroVis[i][j]);
+                da.setVisible(true);
+				f=setf(fi);
+				System.out.println(TableroVis[i][j]+","+f);
     			tipoficha(i,j,f);
     		}
     	}else {
@@ -233,7 +239,7 @@ public class TableroGame extends JPanel implements ComponentListener {
 						p++;
 					}else if(TableroVis[x-p][y-p]==1) {
 						p++;
-					}else if(p==lista.length) {
+					}else if(p==Math.abs(xm)) {
 						p=-1;
 					}	
 				}
@@ -253,7 +259,7 @@ public class TableroGame extends JPanel implements ComponentListener {
 						p++;
 					}else if(TableroVis[x+p][y+p]==1) {
 						p++;
-					}else if(p==lista.length) {
+					}else if(p==Math.abs(xm)) {
 						p=-1;
 					}	
 				}
@@ -273,7 +279,7 @@ public class TableroGame extends JPanel implements ComponentListener {
 						p++;
 					}else if(TableroVis[x-p][y+p]==1) {
 						p++;
-					}else if(p==lista.length) {
+					}else if(p==Math.abs(xm)) {
 						p=-1;
 					}	
 				}
@@ -293,7 +299,7 @@ public class TableroGame extends JPanel implements ComponentListener {
 						p++;
 					}else if(TableroVis[x+p][y-p]==1) {
 						p++;
-					}else if(p==lista.length) {
+					}else if(p==Math.abs(xm)) {
 						p=-1;
 					}	
 				}
@@ -323,23 +329,37 @@ public class TableroGame extends JPanel implements ComponentListener {
     public void tipoficha(int i ,int j,int f) {
     	if (f==2) {
     		nCasillas[i][j].setIcon(new ImageIcon(TableroGame.class.getResource("/image/peonV.png")));
+    		this.TableroVis[i][j]=2;
     	}else if(f==3) {
     		nCasillas[i][j].setIcon(new ImageIcon(TableroGame.class.getResource("/image/peonA.png")));
+    		this.TableroVis[i][j]=3;
     	}else if(f==4) {
     		nCasillas[i][j].setIcon(new ImageIcon(TableroGame.class.getResource("/image/reinaV.png")));
+    		this.TableroVis[i][j]=4;
     	}else if(f==5) {
     		nCasillas[i][j].setIcon(new ImageIcon(TableroGame.class.getResource("/image/reinaA.png")));
+    		this.TableroVis[i][j]=5;
     	}else if(f==6) {
     		nCasillas[i][j].setIcon(new ImageIcon(TableroGame.class.getResource("/image/ninjaV.png")));
+    		this.TableroVis[i][j]=6;
     	}else if(f==7) {
     		nCasillas[i][j].setIcon(new ImageIcon(TableroGame.class.getResource("/image/ninjaA.png")));
+    		this.TableroVis[i][j]=7;
     	}else if(f==8) {
     		nCasillas[i][j].setIcon(new ImageIcon(TableroGame.class.getResource("/image/zombiV.png")));
+    		this.TableroVis[i][j]=8;
     	}else if(f==9) {
     		nCasillas[i][j].setIcon(new ImageIcon(TableroGame.class.getResource("/image/zombiA.png")));
+    		this.TableroVis[i][j]=9;
+    	}else if(f==10) {
+    		nCasillas[i][j].setIcon(new ImageIcon(TableroGame.class.getResource("/image/ninjaA_S.png")));
+    		this.TableroVis[i][j]=10;
+    	}else if(f==11) {
+    		nCasillas[i][j].setIcon(new ImageIcon(TableroGame.class.getResource("/image/ninjaV_S.png")));
+    		this.TableroVis[i][j]=11;
     	}else {
     		JOptionPane.showMessageDialog(null, "Imagen no encontrada","ALERTA!!!",JOptionPane.PLAIN_MESSAGE);
-    		nCasillas[i][j].setIcon(new ImageIcon(TableroGame.class.getResource("/image/giphy.gif")));
+    		
     	}
     }
     
@@ -406,6 +426,10 @@ public class TableroGame extends JPanel implements ComponentListener {
     	nCasillas[x][y].setIcon(null);
 
 
+    }
+    
+    public int setf(int fi) {
+    	return fi;
     }
    
 }
