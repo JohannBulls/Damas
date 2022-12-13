@@ -136,10 +136,22 @@ public class DamasGUI extends JFrame {
 		panel.add(btnLoad);
 		
 		JButton btnRules = new JButton("RULES");
+		btnRules.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Rules ru = new Rules();
+				ru.setVisible(true);
+                dispose();
+			}
+		});
 		btnRules.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		panel.add(btnRules);
 		
 		JButton btnExit = new JButton("EXIT");
+		btnExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 		btnExit.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		panel.add(btnExit);
 		

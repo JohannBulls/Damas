@@ -58,6 +58,9 @@ public class Rules extends JFrame {
         JButton btnExit = new JButton("EXIT");
         btnExit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	DamasGUI da = new DamasGUI();
+                da.setVisible(true);
+                dispose();
             }
         });
         btnExit.setForeground(Color.BLACK);
@@ -70,11 +73,6 @@ public class Rules extends JFrame {
         txtpnFichasLosJugadores.setForeground(Color.BLACK);
         txtpnFichasLosJugadores.setFont(new Font("Tahoma", Font.PLAIN, 15));
         txtpnFichasLosJugadores.setBackground(new Color(128, 255, 255));
-
-        JButton btnNext = new JButton("Next");
-        btnNext.setForeground(Color.BLACK);
-        btnNext.setFont(new Font("Tahoma", Font.PLAIN, 30));
-        btnNext.setBackground(Color.WHITE);
 
         JTextPane txtpnFichaNormalReina = new JTextPane();
         txtpnFichaNormalReina.setToolTipText("");
@@ -91,50 +89,43 @@ public class Rules extends JFrame {
         txtpnFichasLosJugadores_1_1.setBackground(new Color(128, 255, 255));
         GroupLayout groupLayout = new GroupLayout(getContentPane());
         groupLayout.setHorizontalGroup(
-                groupLayout.createParallelGroup(Alignment.TRAILING)
-                        .addGroup(groupLayout.createSequentialGroup()
-                                .addContainerGap(400, Short.MAX_VALUE)
-                                .addComponent(lbRules)
-                                .addGap(347))
-                        .addGroup(groupLayout.createSequentialGroup()
-                                .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                                        .addGroup(groupLayout.createSequentialGroup()
-                                                .addGap(37)
-                                                .addComponent(txtpnAsdsadsadjksaggjdgsajhdvsajvjhdvjhsavjhdasvjhsjavhasdvvhsadvjhvasd, GroupLayout.PREFERRED_SIZE, 408, GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(groupLayout.createSequentialGroup()
-                                                .addGap(201)
-                                                .addComponent(btnNext, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(ComponentPlacement.RELATED)
-                                                .addComponent(btnExit, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                                        .addComponent(txtpnFichasLosJugadores, GroupLayout.PREFERRED_SIZE, 408, GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(groupLayout.createSequentialGroup()
-                                                .addComponent(txtpnFichaNormalReina, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(ComponentPlacement.UNRELATED)
-                                                .addComponent(txtpnFichasLosJugadores_1_1, GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)))
-                                .addContainerGap(38, GroupLayout.PREFERRED_SIZE))
+        	groupLayout.createParallelGroup(Alignment.TRAILING)
+        		.addGroup(groupLayout.createSequentialGroup()
+        			.addGap(37)
+        			.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+        				.addComponent(txtpnAsdsadsadjksaggjdgsajhdvsajvjhdvjhsavjhdasvjhsjavhasdvvhsadvjhvasd, GroupLayout.PREFERRED_SIZE, 408, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(btnExit, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE))
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+        				.addComponent(txtpnFichasLosJugadores, GroupLayout.PREFERRED_SIZE, 408, GroupLayout.PREFERRED_SIZE)
+        				.addGroup(groupLayout.createSequentialGroup()
+        					.addComponent(txtpnFichaNormalReina, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
+        					.addPreferredGap(ComponentPlacement.UNRELATED)
+        					.addComponent(txtpnFichasLosJugadores_1_1, GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)))
+        			.addContainerGap(31, GroupLayout.PREFERRED_SIZE))
+        		.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+        			.addGap(347)
+        			.addComponent(lbRules)
+        			.addContainerGap(400, Short.MAX_VALUE))
         );
         groupLayout.setVerticalGroup(
-                groupLayout.createParallelGroup(Alignment.LEADING)
-                        .addGroup(groupLayout.createSequentialGroup()
-                                .addGap(30)
-                                .addComponent(lbRules)
-                                .addPreferredGap(ComponentPlacement.UNRELATED)
-                                .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                                        .addGroup(groupLayout.createSequentialGroup()
-                                                .addComponent(txtpnAsdsadsadjksaggjdgsajhdvsajvjhdvjhsavjhdasvjhsjavhasdvvhsadvjhvasd, GroupLayout.PREFERRED_SIZE, 295, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(ComponentPlacement.RELATED)
-                                                .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-                                                        .addComponent(btnNext, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(btnExit, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)))
-                                        .addGroup(groupLayout.createSequentialGroup()
-                                                .addComponent(txtpnFichasLosJugadores, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                                .addGap(9)
-                                                .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                                                        .addComponent(txtpnFichaNormalReina, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(txtpnFichasLosJugadores_1_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-                                .addContainerGap(70, Short.MAX_VALUE))
+        	groupLayout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(groupLayout.createSequentialGroup()
+        			.addGap(23)
+        			.addComponent(lbRules)
+        			.addGap(18)
+        			.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+        				.addGroup(groupLayout.createSequentialGroup()
+        					.addComponent(txtpnAsdsadsadjksaggjdgsajhdvsajvjhdvjhsavjhdasvjhsjavhasdvvhsadvjhvasd, GroupLayout.PREFERRED_SIZE, 295, GroupLayout.PREFERRED_SIZE)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(btnExit, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE))
+        				.addGroup(groupLayout.createSequentialGroup()
+        					.addComponent(txtpnFichasLosJugadores, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        					.addGap(9)
+        					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+        						.addComponent(txtpnFichaNormalReina, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE)
+        						.addComponent(txtpnFichasLosJugadores_1_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+        			.addContainerGap(24, Short.MAX_VALUE))
         );
         getContentPane().setLayout(groupLayout);
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
